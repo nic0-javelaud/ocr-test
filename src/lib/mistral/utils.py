@@ -86,7 +86,7 @@ def run_ocr_demo( image ):
         invoice = sfdc.Invoice__c.create({
             "Name": data['invoice_no'], 
             "Account__c": account['id'],
-            "Receipt_date__c": data['receipt_date'],
+            "Receipt_date__c": data['invoice_date'],
             "Due_date__c": data['due_date'],
             "Amount__c": data['amount'],
             "Tax__c": data['tax_amount']

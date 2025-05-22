@@ -76,7 +76,7 @@ pdf.drawString(72, h - 236, 'Jonh Smith')
 pdf.drawString(72, h - 252, '2 Court Square')
 pdf.drawString(72, h - 268, 'New York, NY 12210')
 
-pdf.drawRightString(w - 64, h - 220, "US-002")
+pdf.drawRightString(w - 64, h - 220, invoice['id'])
 pdf.drawRightString(w - 64, h - 244, "18/02/2025")
 pdf.drawRightString(w - 64, h - 268, "14/03/2025")
 
