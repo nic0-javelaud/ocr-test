@@ -46,13 +46,14 @@ class InvoiceDetail(BaseModel):
     )
     amount: float = Field(description="Total amount present in the invoice after taxes")
 
-def run_ocr_demo( url ):
+def run_ocr_demo( image ):
     # SEND request to API
     response = client.ocr.process(
         model="mistral-ocr-latest",
-        document=ImageURLChunk(
-            image_url="https://www.billdu.com/wp-content/uploads/2024/07/Receipt-template-example.jpg"
-        ),
+        document={
+            "type": "image_url",
+            "image_url": f"data:image/jpeg;base64,{image}" 
+        },
         document_annotation_format=response_format_from_pydantic_model(InvoiceDetail)
     )
 

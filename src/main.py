@@ -64,7 +64,7 @@ class ChatQuery(BaseModel):
     question: str
 
 class OCRDemo(BaseModel):
-  url: str
+  image: str
 
 @app.get("/ping")
 def read_root():
@@ -72,5 +72,5 @@ def read_root():
 
 @app.post("/demo/ocr")
 async def ocr_demo( body: OCRDemo ):
-  result = run_ocr_demo( body.url )
+  result = run_ocr_demo( body.image )
   return result
