@@ -27,8 +27,8 @@ class InvoiceItem(BaseModel):
   amount: float
 
 class InvoiceDetail(BaseModel):
-    receipt_no: str = Field(description="Receipt number")
-    receipt_date: str = Field(
+    invoice_no: str = Field(description="Invoice number")
+    invoice_date: str = Field(
         description="In YYYY-MM-DD format. If not present in the document, leave as empty string"
     )
     due_date: str = Field(
@@ -76,15 +76,15 @@ def run_ocr_demo( image ):
     print(f"Account: {account}")
 
     # INVOICES
-    invoice_results = sfdc.query(f"SELECT id, name FROM Invoice__c WHERE name='{data['receipt_no']}' LIMIT 1")
+    invoice_results = sfdc.query(f"SELECT id, name FROM Invoice__c WHERE name='{data['invoice_no']}' LIMIT 1")
     if invoice_results['totalSize'] == 1:
         invoice = invoice_results['records'][0]
         invoice =  {k.lower(): v for k, v in invoice.items()}
         print(f"Invoice #{invoice['Name']} found. Skipping Invoice creation.")
     else:
-        print(f" No invoice #{data['receipt_no']} found. Creating new one.")
+        print(f" No invoice #{data['invoice_no']} found. Creating new one.")
         invoice = sfdc.Invoice__c.create({
-            "Name": data['receipt_no'], 
+            "Name": data['invoice_no'], 
             "Account__c": account['id'],
             "Receipt_date__c": data['receipt_date'],
             "Due_date__c": data['due_date'],
