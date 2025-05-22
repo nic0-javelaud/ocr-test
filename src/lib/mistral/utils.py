@@ -101,4 +101,4 @@ def run_ocr_demo( url ):
             "Total_price__c": item['amount']
         })
     
-    return {"data": }
+    return {"data": {"account":account, "invoice":invoice, "ocr": data}}

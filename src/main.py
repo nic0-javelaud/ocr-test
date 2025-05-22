@@ -63,14 +63,14 @@ app.add_middleware(
 class ChatQuery(BaseModel):
     question: str
 
-class textUpload(BaseModel):
-    text: str
+class OCRDemo(BaseModel):
+  url: str
 
 @app.get("/ping")
 def read_root():
   return {"status": "Ok"}
 
 @app.post("/demo/ocr")
-async def ocr_demo( url: str ):
-  result = run_ocr_demo( url )
-  return {"result": result}
+async def ocr_demo( body: OCRDemo ):
+  result = run_ocr_demo( body.url )
+  return result

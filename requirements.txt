@@ -5,3 +5,4 @@ pydantic
 pypdf
 python-multipart
 uvicorn
+simple_salesforce
