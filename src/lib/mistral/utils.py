@@ -4,14 +4,15 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # IMPORT from External libraries
-from mistralai_private import MistralPrivate, DocumentURLChunk, ImageURLChunk, ResponseFormat
-from mistralai_private.extra import response_format_from_pydantic_model
+from mistralai import Mistral, ImageURLChunk, DocumentURLChunk, ResponseFormat
+from mistralai.extra import response_format_from_pydantic_model
+
 from pydantic import BaseModel, Field
 from simple_salesforce import Salesforce
 
 # INITIALIZE Client
-client = MistralPrivate(api_key=os.environ.get('MISTRAL_API_KEY'))
-
+client = Mistral(api_key=os.environ.get('MISTRAL_API_KEY'))
+print(os.environ.get('MISTRAL_API_KEY'))
 #INITIALIZE sfdc client
 sfdc=Salesforce(username=os.environ.get('SFDC_USERNAME'), password=os.environ.get('SFDC_PWD'), security_token=os.environ.get('SFDC_SECURITY_TOKEN'))
 
@@ -48,11 +49,11 @@ class InvoiceDetail(BaseModel):
 def run_ocr_demo( url ):
     # SEND request to API
     response = client.ocr.process(
-    model="mistral-ocr-latest",
-    document=ImageURLChunk(
-        image_url="https://www.billdu.com/wp-content/uploads/2024/07/Receipt-template-example.jpg"
-    ),
-    document_annotation_format=response_format_from_pydantic_model(InvoiceDetail),
+        model="mistral-ocr-latest",
+        document=ImageURLChunk(
+            image_url="https://www.billdu.com/wp-content/uploads/2024/07/Receipt-template-example.jpg"
+        ),
+        document_annotation_format=response_format_from_pydantic_model(InvoiceDetail)
     )
 
     # OCR DATA
