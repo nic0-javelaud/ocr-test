@@ -12,12 +12,10 @@ from simple_salesforce import Salesforce
 
 # INITIALIZE Client
 client = Mistral(api_key=os.environ.get('MISTRAL_API_KEY'))
-print(os.environ.get('MISTRAL_API_KEY'))
-#INITIALIZE sfdc client
+# INITIALIZE sfdc client
 sfdc=Salesforce(username=os.environ.get('SFDC_USERNAME'), password=os.environ.get('SFDC_PWD'), security_token=os.environ.get('SFDC_SECURITY_TOKEN'))
 
 # SET constant variables
-supplier_name="TechNova"
 
 # DEFINE Pydantic classes
 class InvoiceItem(BaseModel):
@@ -46,8 +44,8 @@ class InvoiceDetail(BaseModel):
     )
     amount: float = Field(description="Total amount present in the invoice after taxes")
 
+# RUN Document AI via SDK
 def run_ocr_demo( image ):
-    # SEND request to API
     response = client.ocr.process(
         model="mistral-ocr-latest",
         document={
@@ -62,7 +60,7 @@ def run_ocr_demo( image ):
     print(data)
 
     # ACCOUNTS
-    account_results = sfdc.query(f"SELECT id, name FROM Account WHERE name='{supplier_name}' LIMIT 1")
+    account_results = sfdc.query(f"SELECT id, name FROM Account WHERE name='{data['supplier_name']}' LIMIT 1")
     print(account_results)
     if account_results['totalSize'] == 1:
         account = account_results['records'][0]
@@ -71,7 +69,7 @@ def run_ocr_demo( image ):
     else:
         print(f" No account found for ''. Creating new one.")
         account = sfdc.Account.create({
-            "Name": supplier_name
+            "Name": data['supplier_name']
         })
     print(f"Account: {account}")
 

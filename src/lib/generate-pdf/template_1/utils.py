@@ -2,10 +2,6 @@
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 
-from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.pdfbase import pdfmetrics
-from reportlab.lib import colors
-
 w, h = letter
 
 # initializing variables with values
@@ -17,17 +13,17 @@ textLines = [
     'Technology makes us aware of',
     'the world around us.',
 ]
-image = './signature.png'
+image = '../../../assets/images/signature.png'
 
 supplier = {
-    "name": 'TechNova',
+    "name": 'UrbanTech Systems',
     "address" : [
         '1912 Harvest Lane',
         'New York, NY 12210'
     ]
 }
 invoice = {
-    "id": 'US-002',
+    "id": 'US-005',
     "date": '26/02/2025',
     "due_date": '18/03/2025',
     "amount": '154.06',
@@ -87,7 +83,7 @@ pdf.line(64, h - y_z, w - 64, h - y_z)
 y_z = y_z + 24 + 12
 pdf.setFont("Helvetica-Bold", 26)
 pdf.drawString(64, h - y_z, 'Total Amount')
-pdf.drawRightString(w - 64, h - y_z, "$154.06")
+pdf.drawRightString(w - 64, h - y_z, "$310.25")
 
 y_z = y_z + 18
 pdf.line(64, h - y_z, w - 64, h - y_z)
